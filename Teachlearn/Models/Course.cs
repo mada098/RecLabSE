@@ -12,6 +12,7 @@ namespace Teachlearn.Models
         public string CourseName { get; set; }
 
         public string CourseDescription { get; set; }
+        public string CourseAttendance { get; set; }
 
         public string DownloadLink { get; set; }
 

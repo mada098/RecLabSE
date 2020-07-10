@@ -246,6 +246,9 @@ namespace Teachlearn.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ClassroomMessage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ClassroomName")
                         .HasColumnType("nvarchar(max)");
 
@@ -267,6 +270,9 @@ namespace Teachlearn.Migrations
 
                     b.Property<Guid?>("ClassroomID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CourseAttendance")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CourseDescription")
                         .HasColumnType("nvarchar(max)");

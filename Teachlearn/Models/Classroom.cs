@@ -11,6 +11,7 @@ namespace Teachlearn.Models
         [Key]
         public Guid ClassroomID { get; set; }
         public string ClassroomName { get; set; }
+        public string ClassroomMessage { get; set; }
         public Professor Professor { get; set; }
         public ICollection<Course> Courses { get; set; }
         public ICollection<Stoc> Stocs { get; set; }

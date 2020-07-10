@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,13 +14,13 @@ namespace Teachlearn.Controllers
     public class CoursesController : Controller
     {
         private readonly TeachlearnContext _context;
-
         public CoursesController(TeachlearnContext context)
         {
             _context = context;
         }
 
         // GET: Courses
+        [Authorize(Roles = "Profesor, Student")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Courses.ToListAsync());
@@ -44,6 +45,7 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Profesor")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +56,7 @@ namespace Teachlearn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Create([Bind("CourseID,CourseName,CourseDescription,DownloadLink")] Course course)
         {
             if (ModelState.IsValid)
@@ -67,6 +70,7 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -87,6 +91,7 @@ namespace Teachlearn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Edit(Guid id, [Bind("CourseID,CourseName,CourseDescription,DownloadLink")] Course course)
         {
             if (id != course.CourseID)
@@ -118,6 +123,7 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -138,6 +144,7 @@ namespace Teachlearn.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var course = await _context.Courses.FindAsync(id);

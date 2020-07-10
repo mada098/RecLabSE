@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,14 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Assignments
+        [Authorize(Roles = "Profesor, Student")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Assignments.ToListAsync());
         }
 
         // GET: Assignments/Details/5
+        [Authorize(Roles = "Profesor, Student")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -44,6 +47,7 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Assignments/Create
+        [Authorize(Roles = "Profesor")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace Teachlearn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Create([Bind("AssignmentID,AssignmentName,AssignmentDescription,Grade")] Assignment assignment)
         {
             if (ModelState.IsValid)
@@ -67,6 +72,7 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Assignments/Edit/5
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -87,6 +93,7 @@ namespace Teachlearn.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Edit(Guid id, [Bind("AssignmentID,AssignmentName,AssignmentDescription,Grade")] Assignment assignment)
         {
             if (id != assignment.AssignmentID)
@@ -118,6 +125,7 @@ namespace Teachlearn.Controllers
         }
 
         // GET: Assignments/Delete/5
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -138,6 +146,7 @@ namespace Teachlearn.Controllers
         // POST: Assignments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Profesor")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var assignment = await _context.Assignments.FindAsync(id);
